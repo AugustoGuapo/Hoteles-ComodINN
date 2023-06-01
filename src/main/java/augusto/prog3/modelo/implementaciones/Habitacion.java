@@ -6,13 +6,15 @@ public class Habitacion {
     private int capacidad;
     private int nroHabitacion;
     private String tipoHabitacion;
+    private Huesped titular;
     private List<Huesped> huespedes;
 
-    public Habitacion(int capacidad, int nroHabitacion,String tipoHabitacion, List<Huesped> huespedes) {
+    public Habitacion(int capacidad, int nroHabitacion,String tipoHabitacion, List<Huesped> huespedes, Huesped titular) {
         this.capacidad = capacidad;
         this.nroHabitacion = nroHabitacion;
         this.tipoHabitacion = tipoHabitacion;
         this.huespedes = huespedes;
+        this.titular = titular;
     }
 
     public Habitacion() {
@@ -60,6 +62,20 @@ public class Habitacion {
     @Override
     public String toString() {
         return "Habitacion{" + "capacidad=" + capacidad + ", nroHabitacion=" + nroHabitacion + ", tipoHabitacion=" + tipoHabitacion + ", huespedes=" + huespedes + '}';
+    }
+
+    /**
+     * @return the titular
+     */
+    public Huesped getTitular() {
+        return titular;
+    }
+
+    /**
+     * @param titular the titular to set
+     */
+    public void setTitular(Huesped titular) {
+        this.titular = titular;
     }
     
     

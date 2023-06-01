@@ -4,6 +4,7 @@
  */
 package augusto.prog3.vista;
 
+import augusto.prog3.modelo.implementaciones.Factura;
 import augusto.prog3.modelo.implementaciones.Habitacion;
 import augusto.prog3.modelo.implementaciones.Hotel3;
 import augusto.prog3.modelo.implementaciones.Hotel4;
@@ -14,8 +15,10 @@ import augusto.prog3.servicio.HotelService;
 import java.time.LocalDate;
 import java.time.ZoneId;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
+import java.util.stream.Collectors;
 import javax.swing.JOptionPane;
 
 /**
@@ -37,9 +40,8 @@ public class Vista1 extends javax.swing.JFrame {
     Hotel3 hotel3 = new Hotel3();
     Hotel4 hotel4 = new Hotel4();
     Hotel5 hotel5 = new Hotel5();
-    HotelService servicio3 = new HotelService(hotel3);
-    HotelService servicio4 = new HotelService(hotel4);
-    HotelService servicio5 = new HotelService(hotel5);
+    HotelService servicio = new HotelService(Arrays.asList(hotel3, hotel4, hotel5));
+    Huesped clienteActual;
     /**
      * This method is called from within the constructor to initialize the form.
      * WARNING: Do NOT modify this code. The content of this method is always
@@ -71,7 +73,23 @@ public class Vista1 extends javax.swing.JFrame {
         jLabel9 = new javax.swing.JLabel();
         cbx_titular = new javax.swing.JComboBox<>();
         panelServicios = new javax.swing.JPanel();
+        jLabel8 = new javax.swing.JLabel();
+        jLabel10 = new javax.swing.JLabel();
+        cbx_facturaspendientes = new javax.swing.JComboBox<>();
+        tbx_idbuscarservicios = new javax.swing.JTextField();
+        jButton1 = new javax.swing.JButton();
+        jLabel11 = new javax.swing.JLabel();
+        cbx_serviciosadicionales = new javax.swing.JComboBox<>();
+        jLabel12 = new javax.swing.JLabel();
+        jButton2 = new javax.swing.JButton();
+        jTextField1 = new javax.swing.JTextField();
         panelCaja = new javax.swing.JPanel();
+        jLabel13 = new javax.swing.JLabel();
+        jLabel14 = new javax.swing.JLabel();
+        cbx_facturaspendientescaja = new javax.swing.JComboBox<>();
+        tbx_idbuscarcaja = new javax.swing.JTextField();
+        jButton3 = new javax.swing.JButton();
+        jButton4 = new javax.swing.JButton();
         titulo = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -233,33 +251,178 @@ public class Vista1 extends javax.swing.JFrame {
                         .addGap(0, 0, Short.MAX_VALUE))))
         );
 
-        cld_llegada.setMinSelectableDate(new Date(2023,04,15));
+        cld_llegada.setMinSelectableDate(new Date());
         cld_salida.setMinSelectableDate(cld_llegada.getDate() == null ? new Date(): cld_llegada.getDate());
 
         jTabbedPane1.addTab("Alojamiento", panelAlojamiento);
+
+        jLabel8.setText("Identificacion a buscar");
+
+        jLabel10.setText("Facturas pendientes");
+
+        cbx_facturaspendientes.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_facturaspendientesActionPerformed(evt);
+            }
+        });
+
+        tbx_idbuscarservicios.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbx_idbuscarserviciosActionPerformed(evt);
+            }
+        });
+
+        jButton1.setText("Buscar");
+        jButton1.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton1ActionPerformed(evt);
+            }
+        });
+
+        jLabel11.setText("Servicios adicionales");
+
+        cbx_serviciosadicionales.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_serviciosadicionalesActionPerformed(evt);
+            }
+        });
+
+        jLabel12.setText("Dias del servicio");
+
+        jButton2.setText("Añadir Servicio");
+        jButton2.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton2ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelServiciosLayout = new javax.swing.GroupLayout(panelServicios);
         panelServicios.setLayout(panelServiciosLayout);
         panelServiciosLayout.setHorizontalGroup(
             panelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(panelServiciosLayout.createSequentialGroup()
+                .addGroup(panelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelServiciosLayout.createSequentialGroup()
+                        .addGap(202, 202, 202)
+                        .addGroup(panelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jButton1)
+                            .addComponent(jLabel8)
+                            .addComponent(tbx_idbuscarservicios, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                        .addGap(236, 236, 236)
+                        .addGroup(panelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                            .addComponent(jLabel10)
+                            .addComponent(cbx_facturaspendientes, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel11)
+                            .addComponent(cbx_serviciosadicionales, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addComponent(jLabel12)
+                            .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 40, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addGroup(panelServiciosLayout.createSequentialGroup()
+                        .addGap(413, 413, 413)
+                        .addComponent(jButton2)))
+                .addContainerGap(316, Short.MAX_VALUE))
         );
         panelServiciosLayout.setVerticalGroup(
             panelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 553, Short.MAX_VALUE)
+            .addGroup(panelServiciosLayout.createSequentialGroup()
+                .addGap(122, 122, 122)
+                .addGroup(panelServiciosLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                    .addGroup(panelServiciosLayout.createSequentialGroup()
+                        .addComponent(jLabel8)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(tbx_idbuscarservicios, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(jButton1))
+                    .addGroup(panelServiciosLayout.createSequentialGroup()
+                        .addComponent(jLabel10)
+                        .addGap(18, 18, 18)
+                        .addComponent(cbx_facturaspendientes, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                .addGap(18, 18, 18)
+                .addComponent(jLabel11)
+                .addGap(18, 18, 18)
+                .addComponent(cbx_serviciosadicionales, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(18, 18, 18)
+                .addComponent(jLabel12)
+                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addGap(77, 77, 77)
+                .addComponent(jButton2)
+                .addContainerGap(112, Short.MAX_VALUE))
         );
 
         jTabbedPane1.addTab("Servicios adicionales", panelServicios);
+
+        jLabel13.setText("Identificacion a buscar");
+
+        jLabel14.setText("Facturas pendientes");
+
+        cbx_facturaspendientescaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                cbx_facturaspendientescajaActionPerformed(evt);
+            }
+        });
+
+        tbx_idbuscarcaja.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                tbx_idbuscarcajaActionPerformed(evt);
+            }
+        });
+
+        jButton3.setText("Buscar");
+        jButton3.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton3ActionPerformed(evt);
+            }
+        });
+
+        jButton4.setText("Pagar");
+        jButton4.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jButton4ActionPerformed(evt);
+            }
+        });
 
         javax.swing.GroupLayout panelCajaLayout = new javax.swing.GroupLayout(panelCaja);
         panelCaja.setLayout(panelCajaLayout);
         panelCajaLayout.setHorizontalGroup(
             panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 1000, Short.MAX_VALUE)
+            .addGroup(panelCajaLayout.createSequentialGroup()
+                .addGap(456, 456, 456)
+                .addComponent(jButton4)
+                .addContainerGap(499, Short.MAX_VALUE))
+            .addGroup(panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCajaLayout.createSequentialGroup()
+                    .addGap(259, 259, 259)
+                    .addGroup(panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jButton3)
+                        .addComponent(jLabel13)
+                        .addComponent(tbx_idbuscarcaja, javax.swing.GroupLayout.PREFERRED_SIZE, 98, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addGap(236, 236, 236)
+                    .addGroup(panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.CENTER)
+                        .addComponent(jLabel14)
+                        .addComponent(cbx_facturaspendientescaja, javax.swing.GroupLayout.PREFERRED_SIZE, 123, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addContainerGap(259, Short.MAX_VALUE)))
         );
         panelCajaLayout.setVerticalGroup(
             panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-            .addGap(0, 553, Short.MAX_VALUE)
+            .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, panelCajaLayout.createSequentialGroup()
+                .addContainerGap(393, Short.MAX_VALUE)
+                .addComponent(jButton4)
+                .addGap(136, 136, 136))
+            .addGroup(panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(panelCajaLayout.createSequentialGroup()
+                    .addGap(238, 238, 238)
+                    .addGroup(panelCajaLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                        .addGroup(panelCajaLayout.createSequentialGroup()
+                            .addComponent(jLabel13)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(tbx_idbuscarcaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                            .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                            .addComponent(jButton3))
+                        .addGroup(panelCajaLayout.createSequentialGroup()
+                            .addComponent(jLabel14)
+                            .addGap(18, 18, 18)
+                            .addComponent(cbx_facturaspendientescaja, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)))
+                    .addContainerGap(239, Short.MAX_VALUE)))
         );
 
         jTabbedPane1.addTab("Caja", panelCaja);
@@ -300,37 +463,22 @@ public class Vista1 extends javax.swing.JFrame {
     }//GEN-LAST:event_btn_addHuespedActionPerformed
 
     private void btn_alojarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btn_alojarActionPerformed
-        switch(cbx_hoteles.getSelectedIndex()) {
-            case 0 -> servicio3.alojamientoInicial(huespedes, 
-                    servicio3.generarHabitacion(cbx_tipohabitacion.getSelectedIndex(), 
-                            cbx_hoteles.getSelectedIndex(), 
-                            cbx_tipohabitacion.getSelectedIndex(), 
-                            huespedes), 
-                    convertirFecha(cld_llegada.getDate()), 
-                    convertirFecha(cld_salida.getDate()), 
-                    devolverTitular(cbx_titular.getSelectedIndex()), 
-                    new ArrayList<>());
-            case 1 -> servicio4.alojamientoInicial(huespedes, 
-                    servicio4.generarHabitacion(cbx_tipohabitacion.getSelectedIndex(), 
-                            cbx_hoteles.getSelectedIndex(), 
-                            cbx_tipohabitacion.getSelectedIndex(), 
-                            huespedes), 
-                    convertirFecha(cld_llegada.getDate()), 
-                    convertirFecha(cld_salida.getDate()), 
-                    devolverTitular(cbx_titular.getSelectedIndex()), 
-                    new ArrayList<>());
-            case 2 -> servicio5.alojamientoInicial(huespedes, 
-                    servicio5.generarHabitacion(cbx_tipohabitacion.getSelectedIndex(), 
-                            cbx_hoteles.getSelectedIndex(), 
-                            cbx_tipohabitacion.getSelectedIndex(), 
-                            huespedes), 
-                    convertirFecha(cld_llegada.getDate()), 
-                    convertirFecha(cld_salida.getDate()), 
-                    devolverTitular(cbx_titular.getSelectedIndex()), 
-                    new ArrayList<>());
-        }
+
+        servicio.alojamientoInicial(huespedes, 
+                servicio.generarHabitacion(cbx_tipohabitacion.getSelectedIndex()+1, 
+                        cbx_hoteles.getSelectedIndex(), 
+                        cbx_tipohabitacion.getSelectedIndex(), 
+                        huespedes, devolverTitular(cbx_titular.getSelectedIndex()), cbx_hoteles.getSelectedIndex()), 
+                convertirFecha(cld_llegada.getDate()), 
+                convertirFecha(cld_salida.getDate()), 
+                devolverTitular(cbx_titular.getSelectedIndex()), 
+                new ArrayList<>(), cbx_hoteles.getSelectedIndex());
+
+        
+        huespedes = new ArrayList();
         limpiarVentana();
         JOptionPane.showMessageDialog(this, "¡Su alojamiento ha sido registrado exitosamente!\nDisfrute de su estancia.");
+        
     }//GEN-LAST:event_btn_alojarActionPerformed
 
     private void cld_llegadaMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_cld_llegadaMouseClicked
@@ -352,6 +500,56 @@ public class Vista1 extends javax.swing.JFrame {
     private void cbx_hotelesPropertyChange(java.beans.PropertyChangeEvent evt) {//GEN-FIRST:event_cbx_hotelesPropertyChange
         determinarHabitaciones(cbx_hoteles.getSelectedIndex());
     }//GEN-LAST:event_cbx_hotelesPropertyChange
+
+    private void tbx_idbuscarserviciosActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbx_idbuscarserviciosActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbx_idbuscarserviciosActionPerformed
+
+    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
+        cbx_facturaspendientes.removeAllItems();
+        cargarTitulares(tbx_idbuscarservicios.getText());
+    }//GEN-LAST:event_jButton1ActionPerformed
+
+    private void jButton2ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton2ActionPerformed
+        ServicioAdicional nuevoServicio = new ServicioAdicional(cbx_serviciosadicionales.getSelectedItem().toString(), 2000, Integer.parseInt(jTextField1.getText()));
+        Factura facturaActual = clienteActual.getFactura(cbx_facturaspendientes.getSelectedIndex());
+        facturaActual.anadirServicioAdicional(nuevoServicio);
+        JOptionPane.showMessageDialog(this, "Su total a pagar a hora es: " +  facturaActual.getCosto());
+    }//GEN-LAST:event_jButton2ActionPerformed
+
+    private void cbx_serviciosadicionalesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_serviciosadicionalesActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbx_serviciosadicionalesActionPerformed
+
+    private void cbx_facturaspendientesActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_facturaspendientesActionPerformed
+        cbx_serviciosadicionales.removeAllItems();
+        if(cbx_facturaspendientes.getSelectedIndex() == -1) return;
+        ArrayList<String> serviciosPermitidos = servicio.getHotel(clienteActual.getFactura(cbx_facturaspendientes.getSelectedIndex()).getIndiceHotel()).getServiciosPermitidos();
+        for (String servicioPermitido : serviciosPermitidos) {
+            cbx_serviciosadicionales.addItem(servicioPermitido);
+        }
+    }//GEN-LAST:event_cbx_facturaspendientesActionPerformed
+
+    private void cbx_facturaspendientescajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cbx_facturaspendientescajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_cbx_facturaspendientescajaActionPerformed
+
+    private void tbx_idbuscarcajaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_tbx_idbuscarcajaActionPerformed
+        // TODO add your handling code here:
+    }//GEN-LAST:event_tbx_idbuscarcajaActionPerformed
+
+    private void jButton3ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton3ActionPerformed
+        cbx_facturaspendientescaja.removeAllItems();
+        cargarTitularesCaja(tbx_idbuscarcaja.getText());
+    }//GEN-LAST:event_jButton3ActionPerformed
+
+    private void jButton4ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton4ActionPerformed
+
+        Factura facturaActual = clienteActual.getFactura(cbx_facturaspendientescaja.getSelectedIndex());
+        facturaActual.setPagada(true);
+
+        JOptionPane.showMessageDialog(this, "Esperamos que haya sido de su agrado nuestro servicio. ¡Vuelva pronto!");
+    }//GEN-LAST:event_jButton4ActionPerformed
 
     private Huesped devolverTitular(int indice) {
         return huespedes.get(indice);
@@ -378,6 +576,16 @@ public class Vista1 extends javax.swing.JFrame {
         cld_llegada.setDate(null);
         cld_salida.setDate(null);
         cbx_titular.removeAllItems();
+    }
+    
+    private void cargarTitulares(String id) {
+        clienteActual = servicio.getClienteByIdentificacion(id);
+        clienteActual.getFacturas().stream().filter(f -> !f.isPagada()).forEach(h -> cbx_facturaspendientes.addItem(Integer.toString(h.getHabitacion().getNroHabitacion())));
+    }
+    
+    private void cargarTitularesCaja(String id) {
+        clienteActual = servicio.getClienteByIdentificacion(id);
+        clienteActual.getFacturas().stream().filter(f -> !f.isPagada()).forEach(h -> cbx_facturaspendientescaja.addItem(Integer.toString(h.getHabitacion().getNroHabitacion())));
     }
     
     /**
@@ -418,24 +626,40 @@ public class Vista1 extends javax.swing.JFrame {
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btn_addHuesped;
     private javax.swing.JButton btn_alojar;
+    private javax.swing.JComboBox<String> cbx_facturaspendientes;
+    private javax.swing.JComboBox<String> cbx_facturaspendientescaja;
     private javax.swing.JComboBox<String> cbx_hoteles;
+    private javax.swing.JComboBox<String> cbx_serviciosadicionales;
     private javax.swing.JComboBox<String> cbx_tipohabitacion;
     private javax.swing.JComboBox<String> cbx_titular;
     private com.toedter.calendar.JDateChooser cld_llegada;
     private com.toedter.calendar.JDateChooser cld_salida;
+    private javax.swing.JButton jButton1;
+    private javax.swing.JButton jButton2;
+    private javax.swing.JButton jButton3;
+    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
+    private javax.swing.JLabel jLabel10;
+    private javax.swing.JLabel jLabel11;
+    private javax.swing.JLabel jLabel12;
+    private javax.swing.JLabel jLabel13;
+    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
+    private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JTabbedPane jTabbedPane1;
+    private javax.swing.JTextField jTextField1;
     private javax.swing.JPanel panelAlojamiento;
     private javax.swing.JPanel panelCaja;
     private javax.swing.JPanel panelServicios;
+    private javax.swing.JTextField tbx_idbuscarcaja;
+    private javax.swing.JTextField tbx_idbuscarservicios;
     private javax.swing.JTextField tbx_nombre;
     private javax.swing.JTextField tbx_nroid;
     private javax.swing.JLabel titulo;

@@ -1,6 +1,7 @@
 package augusto.prog3.modelo.implementaciones;
 
 import java.util.ArrayList;
+import java.util.Objects;
 
 public class Huesped {
 
@@ -53,6 +54,22 @@ public class Huesped {
     @Override
     public String toString() {
         return "Huesped{" + "nombre=" + nombre + ", nroIdentificacion=" + nroIdentificacion + ", facturas=" + facturas + '}';
+    }
+
+
+    @Override
+    public boolean equals(Object obj) {
+        if (this == obj) {
+            return true;
+        }
+        if (obj == null) {
+            return false;
+        }
+        if (getClass() != obj.getClass()) {
+            return false;
+        }
+        final Huesped other = (Huesped) obj;
+        return Objects.equals(this.nroIdentificacion, other.nroIdentificacion);
     }
 
     

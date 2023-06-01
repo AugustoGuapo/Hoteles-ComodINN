@@ -14,6 +14,7 @@ public class Factura {
     private Huesped titular;
     private List<ServicioAdicional> serviciosAdicionales;
     private float costo;
+    private int indiceHotel;
     private boolean pagada;
 
 
@@ -33,8 +34,7 @@ public class Factura {
         return huespedes.stream()
                 .filter(l -> l.getNroIdentificacion()
                         .equals(nroIdentificacion))
-                .findFirst()
-                .orElseThrow(() -> new HuespedNoEncontrado("No se encontró un huesped con ese número de identificaicón"));
+                .findFirst().orElse(null);
     }
 
     public void setHuesped(int indice, Huesped huesped) {
@@ -91,6 +91,7 @@ public class Factura {
 
     public void anadirServicioAdicional(ServicioAdicional servicioAdicional) {
         this.serviciosAdicionales.add(servicioAdicional);
+        costo+= servicioAdicional.getCostoTotal();
     }
 
     public List<ServicioAdicional> getServiciosAdicionales() {
@@ -111,6 +112,20 @@ public class Factura {
                 ", costo=" + costo +
                 ", pagada=" + pagada +
                 '}';
+    }
+
+    /**
+     * @return the indiceHotel
+     */
+    public int getIndiceHotel() {
+        return indiceHotel;
+    }
+
+    /**
+     * @param indiceHotel the indiceHotel to set
+     */
+    public void setIndiceHotel(int indiceHotel) {
+        this.indiceHotel = indiceHotel;
     }
     
     
